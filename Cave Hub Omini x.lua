@@ -5,10 +5,10 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 local Window = Fluent:CreateWindow({
-     Title = "Cave Hub | 1.0.0",
+     Title = "Cave Hub | 1.0.1",
      SubTitle = "" .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
      TabWidth = 160,
-     Size = UDim2.fromOffset(580, 460),
+     Size = UDim2.fromOffset(500, 320),
      Acrylic = false, -- The blur may be detectable, setting this to false disables blur entirely
      Theme = "Darker",
      MinimizeKey = Enum.KeyCode.RightControl -- Used when theres no MinimizeKeybind
@@ -16,10 +16,11 @@ local Window = Fluent:CreateWindow({
 
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
-    Main = Window:AddTab({ Title = "SpawnAlien", Icon = "rbxassetid://12974189594" }),
-    Teleport = Window:AddTab({ Title = "Teleport", Icon = "rbxassetid://14187688371" }),
-    Special = Window:AddTab({ Title = "Special(Soon)", Icon = "rbxassetid://14202377484" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+     Generel = Window:AddTab({ Title = "General", Icon = "home" }),
+     Main = Window:AddTab({ Title = "SpawnAlien", Icon = "rbxassetid://12974189594" }),
+     Teleport = Window:AddTab({ Title = "Teleport", Icon = "rbxassetid://14187688371" }),
+     Special = Window:AddTab({ Title = "Special(Soon)", Icon = "rbxassetid://14202377484" }),
+     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
 local Options = Fluent.Options
@@ -28,9 +29,96 @@ do
     Fluent:Notify({
         Title = "Notification",
         SubContent = "Beta Test", -- Optional
-        Duration = 5 -- Set to nil to make the notification not disappear
+        Duration = 4 -- Set to nil to make the notification not disappear
     })
 end
+
+------------------------------------------[[AutoFarm]]------------------------------------------
+
+local section = Tabs.Generel:AddSection("AutoFarm")
+Tabs.Generel:AddParagraph({
+     Title = "AutoTransform",
+     Content = "is function use for farm Lv.0-25 or if you want"
+ })
+--[[autoTransform]]--
+local Toggle = Tabs.Generel:AddToggle("MyToggle", {Title = "AutoTransform(HeatBlast)", Default = false })
+
+Toggle:OnChanged(function(Value)
+_G.AutoTransform = Value
+     if _G.AutoTransform then
+          while _G.AutoTransform do
+               game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("AlienMorph"):FireServer("AF","heatblast",240,false)
+          task.wait(2)
+          end
+     end
+end)
+
+Options.MyToggle:SetValue(false)
+
+--[[OP!!]]--
+
+local section = Tabs.Generel:AddSection("OP!!")
+
+--[[blitzwolfer]]--
+
+local Toggle = Tabs.Generel:AddToggle("MyToggle", {Title = "SpamSkill(blitzwolfer OP!!)", Default = false })
+
+Toggle:OnChanged(function(Value)
+_G.Spam = Value
+     if _G.Spam then
+          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("AlienMorph"):FireServer("UA","blitzwolfer",240,false)
+          while _G.Spam do task.wait(.2)
+               game:GetService("ReplicatedStorage"):WaitForChild("AliensPowerRemotes"):WaitForChild("blitzwolfer"):WaitForChild("SoundAttack"):FireServer()
+          end
+     else
+          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("UnMorph"):FireServer(false)
+     end
+end)
+
+Options.MyToggle:SetValue(false)
+
+--[[HeatBlast]]--
+
+local Toggle = Tabs.Generel:AddToggle("MyToggle", {Title = "SpamSkill(HeatBlast OP!!)", Default = false })
+
+Toggle:OnChanged(function(Value)
+_G.Spam2 = Value
+     if _G.Spam2 then
+          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("AlienMorph"):FireServer("UA","heatblast",240,false,true)
+          while _G.Spam2 do task.wait(.5)
+               game:GetService("ReplicatedStorage"):WaitForChild("AliensPowerRemotes"):WaitForChild("uheatblast"):WaitForChild("Attack2"):FireServer()
+               wait(1)
+               game:GetService("ReplicatedStorage"):WaitForChild("AliensPowerRemotes"):WaitForChild("uheatblast"):WaitForChild("Attack3"):FireServer()
+          end
+     else
+          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("UnMorph"):FireServer(false)
+     end
+end)
+
+Options.MyToggle:SetValue(false)
+
+--[[Humungosaur]]--
+
+local Toggle = Tabs.Generel:AddToggle("MyToggle", {Title = "SpamSkill(Humungosaur OP!!)", Default = false })
+
+Toggle:OnChanged(function(Value)
+_G.Spam3 = Value
+     if _G.Spam3 then
+          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("AlienMorph"):FireServer("UA","humungosaur",240,false)
+          wait()
+          game:GetService("ReplicatedStorage"):WaitForChild("AliensPowerRemotes"):WaitForChild("humungosaur"):WaitForChild("Big"):FireServer()
+          while _G.Spam3 do task.wait(.5)
+               game:GetService("ReplicatedStorage"):WaitForChild("AliensPowerRemotes"):WaitForChild("humungosaur"):WaitForChild("Tremida2"):FireServer()
+               game:GetService("ReplicatedStorage"):WaitForChild("AliensPowerRemotes"):WaitForChild("humungosaur"):WaitForChild("hjump2"):FireServer()
+          end
+     else
+          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("UnMorph"):FireServer(false)
+     end
+end)
+
+Options.MyToggle:SetValue(false)
+
+
 ------------------------------------------[[SpawnAlien]]------------------------------------------
 
 local section = Tabs.Main:AddSection("Ben10 Classic")
@@ -106,70 +194,9 @@ Tabs.Main:AddButton({
 Tabs.Main:AddButton({
      Title = "UnTransform",
      Callback = function()
-          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("UnMorph"):FireServer(false) 
+          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("UnMorph"):FireServer(false)
      end
 })
-
-
-local section = Tabs.Main:AddSection("OP!!")
-
---[[blitzwolfer]]--
-
-local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "SpamSkill(blitzwolfer OP!!)", Default = false })
-
-Toggle:OnChanged(function(Value)
-_G.Spam = Value
-     if _G.Spam then
-          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("AlienMorph"):FireServer("UA","blitzwolfer",240,false)
-          while _G.Spam do task.wait()
-               game:GetService("ReplicatedStorage"):WaitForChild("AliensPowerRemotes"):WaitForChild("blitzwolfer"):WaitForChild("SoundAttack"):FireServer()
-          end
-     else
-          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("UnMorph"):FireServer(false)
-     end
-end)
-
-Options.MyToggle:SetValue(false)
-
---[[HeatBlast]]--
-
-local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "SpamSkill(HeatBlast OP!!)", Default = false })
-
-Toggle:OnChanged(function(Value)
-_G.Spam2 = Value
-     if _G.Spam2 then
-          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("AlienMorph"):FireServer("UA","heatblast",240,false,true)
-          while _G.Spam2 do task.wait(1)
-               game:GetService("ReplicatedStorage"):WaitForChild("AliensPowerRemotes"):WaitForChild("uheatblast"):WaitForChild("Attack2"):FireServer()
-               game:GetService("ReplicatedStorage"):WaitForChild("AliensPowerRemotes"):WaitForChild("uheatblast"):WaitForChild("Attack3"):FireServer()
-          end
-     else
-          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("UnMorph"):FireServer(false)
-     end
-end)
-
-Options.MyToggle:SetValue(false)
-
---[[Humungosaur]]--
-
-local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "SpamSkill(Humungosaur OP!!)", Default = false })
-
-Toggle:OnChanged(function(Value)
-_G.Spam3 = Value
-     if _G.Spam3 then
-          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("AlienMorph"):FireServer("UA","humungosaur",240,false)
-          wait()
-          game:GetService("ReplicatedStorage"):WaitForChild("AliensPowerRemotes"):WaitForChild("humungosaur"):WaitForChild("Big"):FireServer()
-          while _G.Spam3 do task.wait(1)
-               game:GetService("ReplicatedStorage"):WaitForChild("AliensPowerRemotes"):WaitForChild("humungosaur"):WaitForChild("Tremida2"):FireServer()
-               game:GetService("ReplicatedStorage"):WaitForChild("AliensPowerRemotes"):WaitForChild("humungosaur"):WaitForChild("hjump2"):FireServer()
-          end
-     else
-          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("UnMorph"):FireServer(false)
-     end
-end)
-
-Options.MyToggle:SetValue(false)
 
 ------------------------------------------[[Teleport]]------------------------------------------
 
@@ -260,6 +287,12 @@ Tabs.Teleport:AddButton({
 Tabs.Special:AddButton({
      Title = "Alien X",
      Callback = function()
+          wait(1)
+          game:GetService("StarterGui"):SetCore("SendNotification",{
+               Title = "Notification", -- Required
+               Text = "GG", -- Required
+               Icon = "rbxassetid://12974181952" -- Optional
+          })
           wait(.5)
           game.Players.LocalPlayer:Kick("Sorry But is Coming SOON")
      end
@@ -324,23 +357,14 @@ Tabs.Special:AddButton({
 
 ------------------------------------------[[Setting]]------------------------------------------
 
-local Toggle = Tabs.Settings:AddToggle("MyToggle", {Title = "AutoSave", Default = false })
-
-Toggle:OnChanged(function(Value)
-_G.AutoSave = Value
-     while _G.AutoSave do task.wait()
-          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SaveAll"):FireServer()
-     end
-end)
-
-Options.MyToggle:SetValue(false)
 Tabs.Settings:AddButton({
      Title = "Rejoin",
      Description = "",
      Callback = function()
-         local ts = game:GetService("TeleportService")
-         local p = game:GetService("Players").LocalPlayer
-         ts:Teleport(game.PlaceId, p)
+          game.Players.LocalPlayer:Kick("Rejoining...")
+          local ts = game:GetService("TeleportService")
+          local p = game:GetService("Players").LocalPlayer
+          ts:Teleport(game.PlaceId, p)
      end
 })
 Tabs.Settings:AddButton({
@@ -451,32 +475,39 @@ Tabs.Settings:AddButton(
          end
      }
 )
- --Addons:
- -- SaveManager (Allows you to have a configuration system)
- -- InterfaceManager (Allows you to have a interface managment system)
- 
- -- Hand the library over to our managers
- SaveManager:SetLibrary(Fluent)
- InterfaceManager:SetLibrary(Fluent)
- 
- -- Ignore keys that are used by ThemeManager.
- -- (we dont want configs to save themes, do we?)
- SaveManager:IgnoreThemeSettings()
- 
- -- You can add indexes of elements the save manager should ignore
- SaveManager:SetIgnoreIndexes({})
- 
- -- use case for doing it this way:
- -- a script hub could have themes in a global folder
- -- and game configs in a separate folder per game
- InterfaceManager:SetFolder("FluentScriptHub")
- SaveManager:SetFolder("FluentScriptHub/specific-game")
- 
- InterfaceManager:BuildInterfaceSection(Tabs.Settings)
- 
- -- You can use the SaveManager:LoadAutoloadConfig() to load a config
- -- which has been marked to be one that auto loads!
- SaveManager:LoadAutoloadConfig()
+local Toggle = Tabs.Settings:AddToggle("MyToggle", {Title = "AutoSave", Default = false })
+
+Toggle:OnChanged(function(Value)
+_G.AutoSave = Value
+     while _G.AutoSave do
+          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SaveAll"):FireServer()
+          task.wait(30)
+     end
+end)
+
+Options.MyToggle:SetValue(false)
+--Addons:
+-- SaveManager (Allows you to have a configuration system)
+-- InterfaceManager (Allows you to have a interface managment system) 
+-- Hand the library over to our managers
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+-- Ignore keys that are used by ThemeManager.
+-- (we dont want configs to save themes, do we?)
+SaveManager:IgnoreThemeSettings() 
+-- You can add indexes of elements the save manager should ignore
+SaveManager:SetIgnoreIndexes({})
+-- use case for doing it this way:
+-- a script hub could have themes in a global folder
+-- and game configs in a separate folder per game
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+
+-- You can use the SaveManager:LoadAutoloadConfig() to load a config
+-- which has been marked to be one that auto loads!
+SaveManager:LoadAutoloadConfig()
 local Toggle = Tabs.Settings:AddToggle("MyToggle", {Title = "AntiAfk", Default = false }) 
 Toggle:OnChanged(function(Value)
      _G.antiAFK = Value
@@ -487,3 +518,11 @@ end)
 
 
 Window:SelectTab(1)
+
+do
+     Fluent:Notify({
+         Title = "Notification",
+         SubContent = "Thx For Wait", -- Optional
+         Duration = 5 -- Set to nil to make the notification not disappear
+     })
+ end
